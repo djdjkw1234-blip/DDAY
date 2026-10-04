@@ -17,24 +17,24 @@
       color: #4a4a4a;
     }
     .card {
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(10px);
       width: 100%;
-      max-width: 360px;
+      max-width: 340px;
       border-radius: 24px;
       padding: 32px 24px;
       text-align: center;
       box-shadow: 0 10px 30px rgba(255, 182, 193, 0.4);
     }
-    .heart { font-size: 40px; margin-bottom: 8px; animation: pulse 1.5s infinite; }
+    .heart { font-size: 36px; margin-bottom: 8px; animation: pulse 1.5s infinite; }
     @keyframes pulse {
       0% { transform: scale(1); }
       50% { transform: scale(1.1); }
       100% { transform: scale(1); }
     }
-    h1 { font-size: 18px; color: #888; font-weight: 500; margin-bottom: 12px; }
-    .days { font-size: 48px; font-weight: 800; color: #ff6b81; margin-bottom: 24px; }
-    .divider { height: 1px; background: #ffe1e6; margin: 20px 0; }
+    h1 { font-size: 16px; color: #888; font-weight: 500; margin-bottom: 8px; }
+    .days { font-size: 46px; font-weight: 800; color: #ff6b81; margin-bottom: 20px; }
+    .divider { height: 1px; background: #ffe1e6; margin: 16px 0; }
     .milestones { text-align: left; }
     .item {
       display: flex;
@@ -44,7 +44,7 @@
       font-size: 14px;
     }
     .item .title { font-weight: 600; color: #555; }
-    .item .date { color: #888; font-size: 12px; }
+    .item .date { color: #999; font-size: 12px; margin-top: 2px; }
     .item .dday {
       background: #fff0f3;
       color: #ff4757;
@@ -60,31 +60,30 @@
   <div class="card">
     <div class="heart">❤️</div>
     <h1>우리가 함께한 지</h1>
-    <div class="days" id="current-days">0일</div>
+    <div class="days" id="current-days">14일</div>
     
     <div class="divider"></div>
 
-    <div class="milestones" id="milestone-list">
-      <!-- 주요 기념일 자동 생성 영역 -->
-    </div>
+    <div class="milestones" id="milestone-list"></div>
   </div>
 
   <script>
-    // 💡 시작일 설정: 2026년 9월 21일 (9/30이 10일이 되는 날짜)
-    const startDate = new Date('2026-09-21');
+    // 💡 시작일: 2026년 9월 21일
+    const startDate = new Date(2026, 8, 21);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    // 오늘 며칠째인지 계산 (시작일 포함 +1일)
+    // 오늘 날짜 계산
     const diffTime = today - startDate;
-    const currentDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
+    const currentDays = Math.round(diffTime / (1000 * 60 * 60 * 24)) + 1;
     document.getElementById('current-days').innerText = `${currentDays}일`;
 
-    // 기념일 목록 계산
+    // 기념일 목록 (50일 포함)
     const milestones = [
-      { name: '100일', days: 100 },
-      { name: '200일', days: 200 },
-      { name: '1주년 (365일)', days: 365 }
+      { name: '50일 🎉', days: 50 },
+      { name: '100일 💕', days: 100 },
+      { name: '200일 💖', days: 200 },
+      { name: '1주년 🌹', days: 365 }
     ];
 
     const listEl = document.getElementById('milestone-list');
@@ -93,8 +92,8 @@
       const targetDate = new Date(startDate);
       targetDate.setDate(startDate.getDate() + m.days - 1);
 
-      const dDayDiff = Math.ceil((targetDate - today) / (1000 * 60 * 60 * 24));
-      const dateStr = `${targetDate.getMonth() + 1}월 ${targetDate.getDate()}일`;
+      const dDayDiff = Math.round((targetDate - today) / (1000 * 60 * 60 * 24));
+      const dateStr = `${targetDate.getFullYear()}년 ${targetDate.getMonth() + 1}월 ${targetDate.getDate()}일`;
 
       let ddayText = dDayDiff > 0 ? `D-${dDayDiff}` : (dDayDiff === 0 ? '오늘!' : '지남');
 
